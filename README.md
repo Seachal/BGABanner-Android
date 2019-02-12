@@ -31,7 +31,7 @@
 
 [点击下载 BGABannerDemo.apk](http://fir.im/BGABannerDemo) 或扫描下面的二维码安装
 
-![BGABannerDemo apk文件二维](http://7xk9dj.com1.z0.glb.clouddn.com/banner/BGABannerDemo.png)
+![BGABannerDemo apk文件二维](http://bgashare.bingoogolapple.cn/banner/BGABannerDemo.png)
 
 ## 常见问题
 
@@ -66,7 +66,7 @@ dependencies {
 
 ### 3.在 Activity 或者 Fragment 中配置 BGABanner 的数据源
 
-有多种配置数据源的方式，这里仅列出三种方式。更多初始化方式请查看 [demo](https://github.com/bingoogolapple/BGABanner-Android/tree/master/demo)，或加网页底部给的 QQ 群咨询
+有多种配置数据源的方式，这里仅列出三种方式。更多初始化方式请查看 [demo](https://github.com/bingoogolapple/BGABanner-Android/tree/master/demo)
 
 >配置数据源的方式1：通过传入数据模型并结合 Adapter 的方式配置数据源。这种方式主要用于加载网络图片，以及实现少于3页时的无限轮播
 
@@ -91,16 +91,22 @@ mContentBanner.setData(Arrays.asList("网络图片路径1", "网络图片路径2
 
 ```java
 List<View> views = new ArrayList<>();
-views.add(BGABannerUtil.getItemImageView(this, R.drawable.ic_guide_1));
-views.add(BGABannerUtil.getItemImageView(this, R.drawable.ic_guide_2));
-views.add(BGABannerUtil.getItemImageView(this, R.drawable.ic_guide_3));
+views.add(View.inflate(context, R.layout.layout_guide_one, null));
+views.add(View.inflate(context, R.layout.layout_guide_two, null));
+views.add(View.inflate(context, R.layout.layout_guide_three, null));
 mContentBanner.setData(views);
 ```
 
 > 配置数据源的方式3：通过传入图片资源 id 的方式配置数据源，主要用于引导页每一页都是只显示图片的情况
 
 ```
-mContentBanner.setData(R.drawable.uoko_guide_foreground_1, R.drawable.uoko_guide_foreground_2, R.drawable.uoko_guide_foreground_3);
+// Bitmap 的宽高在 maxWidth maxHeight 和 minWidth minHeight 之间
+BGALocalImageSize localImageSize = new BGALocalImageSize(720, 1280, 320, 640);
+// 设置数据源
+mContentBanner.setData(localImageSize, ImageView.ScaleType.CENTER_CROP,
+        R.drawable.uoko_guide_background_1,
+        R.drawable.uoko_guide_background_2,
+        R.drawable.uoko_guide_background_3);
 ```
 
 ### 4.监听广告 item 的单击事件，在 BGABanner 里已经帮开发者处理了防止重复点击事件
@@ -187,6 +193,10 @@ mContentBanner.setEnterSkipViewIdAndDelegate(R.id.btn_guide_enter, R.id.tv_guide
     <attr name="banner_isNeedShowIndicatorOnOnlyOnePage" format="boolean" />
     <!-- 自动轮播区域距离 BGABanner 底部的距离，用于使指示器区域与自动轮播区域不重叠 -->
     <attr name="banner_contentBottomMargin" format="dimension"/>
+    <!-- 宽高比例，如果大于 0，则会根据宽度来计算高度，否则使用 android:layout_height 指定的高度 -->
+    <attr name="banner_aspectRatio" format="float"/>
+    <!-- 占位图和资源图片缩放模式 -->
+    <attr name="android:scaleType"/>
 </declare-styleable>
 ```
 
@@ -194,9 +204,9 @@ mContentBanner.setEnterSkipViewIdAndDelegate(R.id.btn_guide_enter, R.id.tv_guide
 
 ## 关于我
 
-| 新浪微博 | 个人主页 | 邮箱 | BGA系列开源库QQ群
-| ------------ | ------------- | ------------ | ------------ |
-| <a href="http://weibo.com/bingoogol" target="_blank">bingoogolapple</a> | <a  href="http://www.bingoogolapple.cn" target="_blank">bingoogolapple.cn</a>  | <a href="mailto:bingoogolapple@gmail.com" target="_blank">bingoogolapple@gmail.com</a> | ![BGA_CODE_CLUB](http://7xk9dj.com1.z0.glb.clouddn.com/BGA_CODE_CLUB.png?imageView2/2/w/200) |
+| 个人主页 | 邮箱 | BGA系列开源库QQ群
+| ------------- | ------------ | ------------ |
+| <a  href="http://www.bingoogolapple.cn" target="_blank">bingoogolapple.cn</a>  | <a href="mailto:bingoogolapple@gmail.com" target="_blank">bingoogolapple@gmail.com</a> | ![BGA_CODE_CLUB](http://bgashare.bingoogolapple.cn/BGA_CODE_CLUB.png?imageView2/2/w/200) |
 
 ## 打赏支持
 
@@ -205,7 +215,7 @@ mContentBanner.setEnterSkipViewIdAndDelegate(R.id.btn_guide_enter, R.id.tv_guide
 如果您目前正打算购买通往墙外的梯子，可以使用我的邀请码「YFQ9Q3B」购买 [Lantern](https://github.com/getlantern/forum)，双方都赠送三个月的专业版使用时间:beers:
 
 <p align="center">
-  <img src="http://7xk9dj.com1.z0.glb.clouddn.com/bga_pay.png" width="450">
+  <img src="http://bgashare.bingoogolapple.cn/bga_pay.png?imageView2/2/w/450" width="450">
 </p>
 
 ## License
